@@ -16,7 +16,7 @@ export const NAV_LINKS = [
 ];
 export const HERO_CONTENT = {
   // We will structure the "Boxed" text inside the component
-  description: "At Lakmal Sinharage Photography, we believe every story deserves to be told beautifully. With an artistic eye and a passion for timeless storytelling, we create frames that celebrate love, style, and life's most meaningful occasions — across Sri Lanka and the world."
+  description: "At Vikum Jayasekara Photography, we believe every story deserves to be told beautifully. With an artistic eye and a passion for timeless storytelling, we create frames that celebrate love, style, and life's most meaningful occasions — across Sri Lanka and the world."
 };
 export const SERVICES = [
   {
