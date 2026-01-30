@@ -12,6 +12,7 @@ import EngagementImg from '../assets/images/ServicesMenu/Engagement.jpg';
 import BirthdayImg from '../assets/images/ServicesMenu/Birthdays.jpg';
 import BabyImg from '../assets/images/ServicesMenu/BabyShoots.jpg';
 import MaternityImg from '../assets/images/ServicesMenu/Pregnancy.jpg';
+import SEO from '../components/layout/SEO';
 
 // Hero Slider Images (Using top 3 services for the hero)
 const HERO_SLIDES = [WeddingImg, EngagementImg, MaternityImg];
@@ -78,6 +79,12 @@ const ServicesPage = () => {
 
   return (
     <main className="w-full bg-[#FDFBF7] text-[#1a1a1a] overflow-x-hidden selection:bg-[#A6906E] selection:text-white">
+
+      <SEO 
+        title="Services & Pricing" 
+        description="Explore our photography packages for Weddings, Engagements, Birthdays, and Baby shoots. Premium quality and timeless editing."
+        url="/services"
+      />
 
       {/* =========================================
           1. CINEMATIC HERO SLIDER (Matching About Page)

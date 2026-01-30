@@ -8,10 +8,16 @@ import FeaturedWeddings from '../components/features/FeaturedWeddings';
 import Testimonials from '../components/features/Testimonials';
 import ServicesMenu from '../components/features/ServicesMenu';
 import FAQSection from '../components/features/FAQSection';
+import SEO from '../components/layout/SEO';
 
 const HomePage = () => {
   return (
     <>
+
+    <SEO 
+        title="Home" 
+        description="Award-winning photographer in Sri Lanka specializing in weddings, portraits, and lifestyle photography."
+      />
       <ParallaxHero />
       <ExperienceSection />
       <ServicesMenu />

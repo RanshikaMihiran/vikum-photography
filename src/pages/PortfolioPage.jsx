@@ -60,6 +60,8 @@ const COLLECTIONS = [
 ];
 
 const PortfolioPage = () => {
+
+  
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // --- HERO LOGIC (UNCHANGED) ---
@@ -71,7 +73,11 @@ const PortfolioPage = () => {
   }, []);
 
   return (
+
+    
     <main className="w-full bg-[#FDFBF7] overflow-x-hidden selection:bg-[#A6906E] selection:text-white">
+
+      
 
       {/* =========================================
           1. CINEMATIC HERO (KEPT AS IS)
