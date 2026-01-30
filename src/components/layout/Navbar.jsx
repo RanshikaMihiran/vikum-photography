@@ -4,7 +4,7 @@ import { ChevronDown, Menu, X, ArrowRight } from 'lucide-react';
 import { NAV_LINKS } from '../../data/constants';
 
 // YOUR LOGO IMPORT
-import LogoImg from '../../assets/images/vmlogo.png';
+import LogoImg from '../../assets/images/vmlogo1.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
