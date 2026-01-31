@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_LINKS } from '../../data/constants';
 
 // YOUR LOGO IMPORT
-import LogoImg from '../../assets/images/vmlogo1.png';
+import LogoImg from '../../assets/images/vmlogo2.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
