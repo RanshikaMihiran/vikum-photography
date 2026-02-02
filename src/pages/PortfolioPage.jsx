@@ -1,88 +1,98 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, Star, ArrowLeftRight, ArrowDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // --- COMPONENTS ---
 import CTASection from '../components/features/CTASection';
+import FAQSection from '../components/features/FAQSection';
 
 // --- IMAGE IMPORTS ---
 import Wedding1 from '../assets/images/ServicesMenu/wedding.jpg';
-// Replace these with your high-res images
-const Wedding2 = "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600";
-import Engagement1 from '../assets/images/ServicesMenu/Engagement.jpg';
-import Birthday1 from '../assets/images/ServicesMenu/Birthdays.jpg';
-import Baby1 from '../assets/images/ServicesMenu/BabyShoots.jpg';
+import Wedding2 from '../assets/images/FeaturedWeddings/FeaturedWeddings1.jpg';
+import Wedding3 from '../assets/images/FeaturedWeddings/FeaturedWeddings2.jpg';
 
-const HERO_SLIDES = [Wedding1, Engagement1, Baby1];
+// Placeholders
+
+
+import Engagement1 from '../assets/images/ServicesMenu/Engagement.jpg';
+import Engagement2 from '../assets/images/FeaturedWeddings/FeaturedWeddings1.jpg';
+import Engagement3 from '../assets/images/FeaturedWeddings/FeaturedWeddings2.jpg';
+
+import Birthday1 from '../assets/images/ServicesMenu/Birthdays.jpg';
+const Birthday2 = "https://images.unsplash.com/photo-1530103862676-de3c9a59af38?q=80&w=600";
+const Birthday3 = "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?q=80&w=600";
+
+import Baby1 from '../assets/images/ServicesMenu/BabyShoots.jpg';
+const Baby2 = "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=600";
+const Baby3 = "https://images.unsplash.com/photo-1519340241574-2291ec335c46?q=80&w=600";
+
+const HERO_IMAGES = [Wedding1, Engagement1, Baby1]; // Renamed to match AboutPage convention
 
 const COLLECTIONS = [
   {
     id: "weddings",
     title: "Weddings",
-    subtitle: "The Union",
-    desc: "Cinematic love stories captured in real-time.",
+    subtitle: "Eternal Love",
+    desc: "A symphony of emotions. We capture the grandeur and the intimate whispers of your special day with a romantic, cinematic touch.",
     link: "/gallery/weddings",
-    color: "#FDFBF7", // Cream background
-    textColor: "#1a1a1a",
-    cover: Wedding2
+    images: [Wedding1, Wedding2, Wedding3]
   },
   {
     id: "engagements",
     title: "Engagements",
     subtitle: "The Promise",
-    desc: "The spark before the vows. Candid and raw.",
+    desc: "Raw, unscripted connection. These sessions are about the chemistry between you two, set against breathtaking backdrops.",
     link: "/gallery/engagements",
-    color: "#E8E6E1", // Slightly darker cream
-    textColor: "#1a1a1a",
-    cover: Engagement1
+    images: [Engagement1, Engagement2, Engagement3]
   },
   {
     id: "birthdays",
     title: "Birthdays",
-    subtitle: "Celebrations",
-    desc: "Joyous milestones surrounded by loved ones.",
+    subtitle: "Joyous Moments",
+    desc: "Vibrant energy and pure happiness. We document the laughter, the lights, and the legacy of your celebration.",
     link: "/gallery/birthdays",
-    color: "#1a1a1a", // Dark background for contrast
-    textColor: "#FDFBF7",
-    cover: Birthday1
+    images: [Birthday1, Birthday2, Birthday3]
   },
   {
     id: "baby-shoots",
     title: "Baby Shoots",
-    subtitle: "New Life",
-    desc: "Gentle, lifestyle moments of your growing family.",
+    subtitle: "New Beginnings",
+    desc: "Soft, warm, and tender. Preserving the fleeting moments of new life with a gentle, organic aesthetic.",
     link: "/gallery/baby-shoots",
-    color: "#A6906E", // Gold background
-    textColor: "#FDFBF7",
-    cover: Baby1
+    images: [Baby1, Baby2, Baby3]
   }
 ];
 
 const PortfolioPage = () => {
-
-  
   const [currentSlide, setCurrentSlide] = useState(0);
+  const containerRef = useRef(null); // Added ref for parallax
 
-  // --- HERO LOGIC (UNCHANGED) ---
+  // --- HERO SLIDER LOGIC ---
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+      setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
+  // --- SCROLL PARALLAX (Matching About Page) ---
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  // Note: yParallax isn't used on the hero images in the AboutPage provided, 
+  // but the hook is set up there. I'll keep the structure identical.
+
   return (
-
-    
-    <main className="w-full bg-[#FDFBF7] overflow-x-hidden selection:bg-[#A6906E] selection:text-white">
-
-      
+    <main className="w-full bg-[#FDFBF7] text-[#1a1a1a] overflow-x-hidden selection:bg-[#A6906E] selection:text-white">
 
       {/* =========================================
-          1. CINEMATIC HERO (KEPT AS IS)
+          1. CINEMATIC HERO SLIDER (Consistent with About Page)
       ========================================= */}
-      <section className="relative h-screen w-full overflow-hidden bg-black z-0">
+      <section className="relative h-screen w-full overflow-hidden bg-black">
+        
+        {/* SLIDESHOW */}
         <AnimatePresence mode='wait'>
           <motion.div 
             key={currentSlide}
@@ -93,21 +103,24 @@ const PortfolioPage = () => {
             className="absolute inset-0 w-full h-full"
           >
              <img 
-               src={HERO_SLIDES[currentSlide]} 
-               alt={`Gallery Slide ${currentSlide}`} 
-               className="w-full h-full object-cover opacity-70"
+               src={HERO_IMAGES[currentSlide]} 
+               alt={`Slide ${currentSlide}`} 
+               className="w-full h-full object-cover opacity-80"
              />
+             {/* Gradient Overlays for Visibility */}
              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
           </motion.div>
         </AnimatePresence>
 
+        {/* PAGE NAME LABEL (Fixed Visibility) */}
         <div className="absolute top-32 left-6 md:left-12 z-30 flex items-center gap-4 mix-blend-difference text-white">
             <span className="h-[2px] w-12 bg-[#A6906E]"></span>
             <span className="font-bold tracking-[0.3em] text-xs uppercase drop-shadow-md">
-                The Collections
+                The Portfolio
             </span>
         </div>
 
+        {/* HERO CONTENT */}
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20 z-30 text-white">
           <div className="max-w-[1600px] mx-auto">
              <div className="overflow-hidden">
@@ -132,8 +145,9 @@ const PortfolioPage = () => {
                    <br/>Explore the stories we've had the honor to tell.
                 </p>
                 
+                {/* Slide Indicators */}
                 <div className="flex gap-3">
-                   {HERO_SLIDES.map((_, index) => (
+                   {HERO_IMAGES.map((_, index) => (
                       <button 
                         key={index}
                         onClick={() => setCurrentSlide(index)}
@@ -145,6 +159,19 @@ const PortfolioPage = () => {
           </div>
         </div>
 
+        {/* Scroll Indicator */}
+        <motion.div 
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="absolute bottom-8 right-8 text-white/50 z-30 hidden md:block"
+        >
+            <div className="flex flex-col items-center gap-2">
+                <span className="text-[10px] uppercase tracking-widest rotate-90 mb-8">Scroll</span>
+                <ArrowDown size={20} />
+            </div>
+        </motion.div>
+
+        {/* CSS for Outline Text effect */}
         <style>{`
           .stroke-text {
             -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
@@ -155,93 +182,119 @@ const PortfolioPage = () => {
 
 
       {/* =========================================
-          2. STICKY STACKING CARDS (Modern Trend)
+          2. BENTO GRID COLLECTIONS (Modern UI)
       ========================================= */}
-      <div className="relative z-10">
-        
-        {/* Intro Text */}
-        <section className="py-24 px-6 bg-[#FDFBF7] flex justify-center text-center">
-            <div className="max-w-2xl">
-                <span className="text-[#A6906E] font-bold tracking-[0.2em] text-xs uppercase mb-4 block">Our Portfolio</span>
-                <h2 className="text-4xl md:text-5xl font-serif text-[#1a1a1a]">Curated Galleries</h2>
-            </div>
-        </section>
-
-        {/* The Stacking Section */}
-        <div className="flex flex-col">
-            {COLLECTIONS.map((collection, index) => (
-                <StickyCard key={collection.id} collection={collection} index={index} />
-            ))}
-        </div>
-
+      <div className="relative z-10 flex flex-col gap-12 md:gap-0" ref={containerRef}>
+        {COLLECTIONS.map((collection, index) => (
+            <ModernBentoSection key={collection.id} collection={collection} index={index} />
+        ))}
       </div>
 
       {/* --- CTA --- */}
+       <FAQSection />
+
       <CTASection />
 
+     
     </main>
   );
 };
 
-// --- SUB-COMPONENT: STICKY CARD ---
-const StickyCard = ({ collection, index }) => {
-  // We use sticky positioning so cards stack on top of each other
-  // 'top-0' makes them stick to the top of the viewport
+// --- SUB-COMPONENT: MODERN BENTO SECTION ---
+const ModernBentoSection = ({ collection, index }) => {
+  const isEven = index % 2 === 0;
+  
+  // Alternating Light Backgrounds
+  const bgClass = isEven ? "bg-[#FDFBF7]" : "bg-white";
+
   return (
-    <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden border-t border-black/5" 
-         style={{ backgroundColor: collection.color, color: collection.textColor }}>
+    <section className={`relative w-full py-20 md:py-32 overflow-hidden ${bgClass}`}>
         
-        <div className="max-w-[1600px] mx-auto w-full h-full px-6 py-12 md:p-20 flex flex-col md:flex-row items-center gap-12 md:gap-24 relative">
-            
-            {/* 1. TEXT CONTENT */}
-            <div className="w-full md:w-1/3 flex flex-col justify-center z-20 order-2 md:order-1">
-                <div className="flex items-center gap-4 mb-8">
-                    <span className="text-6xl font-serif font-bold opacity-20">0{index + 1}</span>
-                    <div className="h-[1px] w-12 bg-current opacity-30"></div>
+        <div className="max-w-[1600px] mx-auto px-6 relative z-10">
+            <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-24`}>
+                
+                {/* --- 1. TEXT CONTENT (Sticky on Desktop) --- */}
+                <div className="w-full lg:w-[35%] flex flex-col items-start text-left lg:sticky lg:top-32 h-fit">
+                    
+                    {/* Floating Label */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#A6906E]/10 border border-[#A6906E]/20 mb-6">
+                        <Star size={12} className="text-[#A6906E] fill-[#A6906E]" />
+                        <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-[#A6906E]">
+                            {collection.subtitle}
+                        </span>
+                    </div>
+
+                    {/* Heading */}
+                    <h2 className="text-4xl md:text-6xl font-serif text-[#1a1a1a] mb-6 leading-tight">
+                        {collection.title}
+                    </h2>
+
+                    <p className="text-gray-600 text-base md:text-lg font-light leading-relaxed mb-8">
+                        {collection.desc}
+                    </p>
+
+                    <Link 
+                        to={collection.link} 
+                        className="group flex items-center gap-4 text-xs md:text-sm font-bold uppercase tracking-widest text-[#1a1a1a] hover:text-[#A6906E] transition-all"
+                    >
+                        <div className="w-12 h-12 rounded-full border border-[#1a1a1a]/20 flex items-center justify-center transition-all duration-300 group-hover:bg-[#A6906E] group-hover:border-[#A6906E] group-hover:scale-110">
+                            <ArrowRight size={18} className="text-[#1a1a1a] -rotate-45 group-hover:rotate-0 group-hover:text-white transition-all duration-300" />
+                        </div>
+                        <span>Explore Gallery</span>
+                    </Link>
                 </div>
 
-                <span className="font-bold tracking-[0.2em] text-xs uppercase mb-4 opacity-70">
-                    {collection.subtitle}
-                </span>
+                {/* --- 2. MODERN IMAGE UI --- */}
+                <div className="w-full lg:w-[65%]">
+                    
+                    {/* DESKTOP: BENTO GRID */}
+                    <div className="hidden lg:grid grid-cols-2 gap-4 h-[600px]">
+                        {/* Main Image (Large) */}
+                        <div className="col-span-2 row-span-2 rounded-2xl overflow-hidden relative group cursor-pointer">
+                             <Link to={collection.link} className="block w-full h-full">
+                                <img 
+                                    src={collection.images[0]} 
+                                    alt="Main" 
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500" />
+                             </Link>
+                        </div>
+                        
+                        {/* Secondary Images (Bottom Row) */}
+                        <div className="rounded-2xl overflow-hidden h-[250px] relative group">
+                            <img src={collection.images[1]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        </div>
+                        <div className="rounded-2xl overflow-hidden h-[250px] relative group">
+                            <img src={collection.images[2]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        </div>
+                    </div>
 
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-none">
-                    {collection.title}
-                </h2>
+                    {/* MOBILE: HORIZONTAL SWIPE CAROUSEL (App-like feel) */}
+                    <div className="lg:hidden w-full relative">
+                        {/* Scroll Container */}
+                        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-6 px-6">
+                            {collection.images.map((img, i) => (
+                                <div key={i} className="min-w-[85vw] h-[400px] snap-center rounded-2xl overflow-hidden relative shadow-lg">
+                                    <img src={img} className="w-full h-full object-cover" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60" />
+                                </div>
+                            ))}
+                        </div>
+                        
+                        {/* Swipe Hint */}
+                        <div className="flex items-center gap-2 justify-end mt-2 text-[#A6906E] opacity-70">
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Swipe</span>
+                            <ArrowLeftRight size={14} />
+                        </div>
+                    </div>
 
-                <p className="text-lg md:text-xl font-light leading-relaxed mb-12 opacity-80 max-w-md">
-                    {collection.desc}
-                </p>
-
-                <Link 
-                   to={collection.link} 
-                   className="group inline-flex items-center gap-4 px-8 py-4 border border-current rounded-full transition-all duration-300 hover:bg-white hover:text-black hover:border-white"
-                >
-                   <span className="text-xs font-bold uppercase tracking-widest">Open Gallery</span>
-                   <ArrowUpRight size={20} className="group-hover:rotate-45 transition-transform duration-300" />
-                </Link>
-            </div>
-
-            {/* 2. IMAGE CONTENT */}
-            <div className="w-full md:w-2/3 h-[50vh] md:h-full relative z-10 order-1 md:order-2">
-                <div className="relative w-full h-full overflow-hidden rounded-sm group cursor-pointer shadow-2xl">
-                   <Link to={collection.link} className="block w-full h-full">
-                       <motion.img 
-                           initial={{ scale: 1.2 }}
-                           whileInView={{ scale: 1 }}
-                           transition={{ duration: 1.5, ease: "easeOut" }}
-                           src={collection.cover} 
-                           alt={collection.title} 
-                           className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
-                       />
-                       
-                       {/* Hover Overlay */}
-                       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-500" />
-                   </Link>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
+
+    </section>
   );
 };
 
