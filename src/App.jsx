@@ -12,8 +12,11 @@ import ServicesPage from './pages/ServicesPage';
 import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 
-// --- GALLERY SUB-PAGES ---
-import WeddingGalleryPage from './pages/gallery/WeddingGalleryPage'; // <--- NEW IMPORT
+// --- NEW GALLERY PAGES ---
+// 1. The List of Couples
+import WeddingPortfolioPage from './pages/gallery/WeddingPortfolioPage';
+// 2. The Individual Album (Dynamic)
+import WeddingDetailsPage from './pages/gallery/WeddingDetailsPage';
 
 // --- SCROLL TO TOP UTILITY ---
 const ScrollToTop = () => {
@@ -38,11 +41,15 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         
-        {/* Main Gallery Route */}
+        {/* Main Portfolio Landing Page (The Categories) */}
         <Route path="/gallery" element={<PortfolioPage />} />
         
-        {/* Gallery Sub-Menu Routes */}
-        <Route path="/gallery/weddings" element={<WeddingGalleryPage />} /> {/* <--- NEW ROUTE */}
+        {/* --- NEW WEDDING ROUTES --- */}
+        {/* 1. The List of Couples */}
+        <Route path="/gallery/weddings" element={<WeddingPortfolioPage />} />
+        
+        {/* 2. The Specific Album (Dynamic ID) */}
+        <Route path="/gallery/weddings/:id" element={<WeddingDetailsPage />} />
         
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
